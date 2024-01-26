@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Arrays;
 
+// https://contest.yandex.ru/contest/22450/run-report/105898152/
 public class A {
 
     private static int[] getDirections(int[] houseNumbers) {
