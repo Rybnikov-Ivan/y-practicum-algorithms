@@ -24,7 +24,7 @@ public class B {
             int[] numbers = new int[10];
             for (int i = 0; i < 4; i++) {
                 for (char number : readArr(reader)) {
-                    if (number != ('.')) {
+                    if (Character.isDigit(number)) {
                         numbers[Integer.parseInt(String.valueOf(number))] += 1;
                     }
                 }
