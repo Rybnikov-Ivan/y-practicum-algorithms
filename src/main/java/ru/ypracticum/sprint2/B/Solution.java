@@ -1,8 +1,4 @@
-package ru.ypracticum.sprint2;
-
-public class B {
-
-}
+package ru.ypracticum.sprint2.B;
 
 // <template>
 class Node<V> {
@@ -16,7 +12,7 @@ class Node<V> {
 }
 // <template>
 
-class Solution {
+public class Solution {
 
     public static void solution(Node<String> head) {
         while (head != null) {
