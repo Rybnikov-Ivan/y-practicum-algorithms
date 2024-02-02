@@ -3,7 +3,6 @@ package ru.ypracticum.sprint2.J;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
 
 public class J {
     public static void main(String[] args) throws IOException {
@@ -16,7 +15,7 @@ public class J {
                 String[] command = reader.readLine().split(" ");
                 switch (command[0]) {
                     case "put":
-                        myQueue.push(Integer.parseInt(command[1]));
+                        myQueue.put(Integer.parseInt(command[1]));
                         break;
                     case "get":
                         myQueue.get();
@@ -37,21 +36,51 @@ public class J {
 }
 
 class MyQueue {
-    LinkedList<Integer> items = new LinkedList<>();
+    Node<Integer> node;
+    int size = 0;
+    Node<Integer> head;
 
-    public void push(Integer elem) {
-        items.add(elem);
+    public void put(Integer elem) {
+        if (node == null) {
+            node = new Node<>(elem, null, null);
+            head = node;
+        } else {
+            node.next = new Node<>(elem, null, node);
+            node = node.next;
+
+        }
+        size += 1;
     }
 
     public void size() {
-        System.out.println(items.size());
+        System.out.println(size);
     }
 
     public void get() {
-        if (items.isEmpty()) {
+        if (head == null) {
             System.out.println("error");
         } else {
-            System.out.println(items.removeFirst());
+            System.out.println(head.value);
+            head = head.next;
+            if (head != null) {
+                head.prev = null;
+            }
+            size -= 1;
+            if (size == 0) {
+                node = null;
+            }
         }
+    }
+}
+
+class Node<V> {
+    public V value;
+    public Node<V> next;
+    public Node<V> prev;
+
+    public Node(V value, Node<V> next, Node<V> prev) {
+        this.value = value;
+        this.next = next;
+        this.prev = prev;
     }
 }
