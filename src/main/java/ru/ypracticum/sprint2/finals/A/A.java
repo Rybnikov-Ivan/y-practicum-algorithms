@@ -1,4 +1,4 @@
-package ru.ypracticum.sprint2.finals;
+package ru.ypracticum.sprint2.finals.A;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
