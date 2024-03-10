@@ -1,9 +1,9 @@
-package ru.ypracticum.sprint5.B;
+package ru.ypracticum.sprint5.E;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class B {
+public class E {
     private static int rootValue;
     private static boolean isBinaryTree(Set<Integer> set, Node head) {
         if (head == null) {
