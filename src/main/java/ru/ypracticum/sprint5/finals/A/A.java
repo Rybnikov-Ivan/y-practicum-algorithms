@@ -1,5 +1,23 @@
 package ru.ypracticum.sprint5.finals.A;
 
+/*
+-- ПРИНЦИП РАБОТЫ --
+В данной задаче я создал сортировку с использованием кучи
+При чтении элементов я кладу каждый элемент в кучу. На этом этапе происходит следующее:
+
+Элемент добавляется в конец коллекции и просеивается вверх до тех пор, пока не найдет свое место
+(пока левый потомок не будет меньше (в этом случае объекты сравнивает компаратор) и пока правый потомок не будет больше)
+
+После чтения всех входных данных я вывожу элементы в отсортированном порядке. На этом этапе происходит следуещее:
+Убираю элемент с вершины кучи и произвожу проссеивание вниз, чтоб найти следующий минимальный элемент (по признаку сравнения объектов).
+
+-- ВРЕМЕННАЯ СЛОЖНОСТЬ --
+Временная сложность составляет O(nlogn). Где n - количество участников соревнования. В худшем случаее придется n раз проссеивать элементы в куче.
+
+-- ПРОСТРАНСТВЕННАЯ СЛОЖНОСТЬ --
+Пространственная сложность характеризуется размером списка, который хранит элементы кучи, поэтому O(n), где n - количество участников соревнования
+ */
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -8,6 +26,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+// https://contest.yandex.ru/contest/24810/run-report/111196684/
 public class A {
 
     static int n;
@@ -57,13 +76,17 @@ public class A {
 
         @Override
         public int compareTo(Participant other) {
-            if (!other.getTaskNumber().equals(this.getTaskNumber())) {
-                return other.getTaskNumber().compareTo(this.getTaskNumber());
+            int taskNumber = Integer.compare(this.getTaskNumber(), other.getTaskNumber());
+            if (taskNumber == 0) {
+                int fine = Integer.compare(this.getFine(), other.getFine());
+                if (fine == 0) {
+                    return this.getLogin().compareTo(other.getLogin());
+                } else {
+                    return fine;
+                }
+            } else {
+                return -taskNumber;
             }
-            if (!other.getFine().equals(this.getFine())) {
-                return this.getFine().compareTo(other.getFine());
-            }
-            return this.getLogin().compareTo(other.getLogin());
         }
 
         public String getLogin() {
@@ -93,14 +116,12 @@ public class A {
         }
 
         private void siftUp(int index) {
-            if (index == 1) {
+            if (index <= 1) {
                 return;
             }
             int parentIndex = index / 2;
             if (heap.get(parentIndex - 1).compareTo(heap.get(index - 1)) > 0) {
-                Participant temp = heap.get(parentIndex - 1);
-                heap.set(parentIndex - 1, heap.get(index - 1));
-                heap.set(index - 1, temp);
+                swap(index - 1, parentIndex - 1);
                 siftUp(parentIndex);
             }
         }
@@ -121,9 +142,7 @@ public class A {
             }
 
             if (heap.get(index).compareTo(heap.get(largeIndex)) > 0) {
-                Participant tmp = heap.get(index);
-                heap.set(index, heap.get(largeIndex));
-                heap.set(largeIndex, tmp);
+                swap(index, largeIndex);
                 siftDown(largeIndex);
             }
         }
@@ -134,6 +153,12 @@ public class A {
             heap.remove(heap.size() - 1);
             siftDown(0);
             return pop;
+        }
+
+        private void swap(int index, int parentIndex) {
+            Participant tmp = heap.get(index);
+            heap.set(index, heap.get(parentIndex));
+            heap.set(parentIndex, tmp);
         }
     }
 }
